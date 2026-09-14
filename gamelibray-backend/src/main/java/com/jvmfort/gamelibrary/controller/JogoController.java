@@ -2,6 +2,7 @@ package com.jvmfort.gamelibrary.controller;
 
 import com.jvmfort.gamelibrary.model.Jogo;
 import com.jvmfort.gamelibrary.service.JogoService;
+import com.jvmfort.gamelibrary.service.SteamService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,18 @@ public class JogoController {
 
     @Autowired
     private JogoService service;
+    private final SteamService steamService;
+
+    public JogoController(SteamService steamService) {
+        this.steamService = steamService;
+    }
+
+    @PostMapping("/importar-steam/{steamId}")
+    public ResponseEntity<List<Jogo>> importarSteam(@PathVariable String steamId) {
+        // Chamada usando a instância injetada (minúscula)
+        List<Jogo> jogosImportados = steamService.importarJogosSteam(steamId);
+        return ResponseEntity.ok(jogosImportados);
+    }
 
     @GetMapping
     public List<Jogo> listar() {

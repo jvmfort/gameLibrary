@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="Recreation and little improvements to the back-end, and implemented the frontend">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamelibray-backend/src/main/java/com/jvmfort/gamelibrary/service/SteamService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamelibray-backend/src/main/java/dto/Steam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibrary-frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibrary-frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-frontend/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibray-backend/src/main/java/com/jvmfort/gamelibrary/controller/JogoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibray-backend/src/main/java/com/jvmfort/gamelibrary/controller/JogoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibray-backend/src/main/java/com/jvmfort/gamelibrary/repository/JogoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibray-backend/src/main/java/com/jvmfort/gamelibrary/repository/JogoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibray-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibray-backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +25,7 @@
         <option value="Enum" />
         <option value="Interface" />
         <option value="JSX File" />
+        <option value="SimpleSourceFile" />
         <option value="Class" />
       </list>
     </option>
