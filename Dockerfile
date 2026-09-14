@@ -3,7 +3,7 @@ FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 
 # Copia os arquivos do backend
-COPY gamelibray-backend/ .
+COPY gamelibrary-backend/ .
 
 # Garante permissão e compila
 RUN chmod +x mvnw && ./mvnw clean package -DskipTests

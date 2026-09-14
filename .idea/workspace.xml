@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="Updated README">
-      <change afterPath="$PROJECT_DIR$/gamelibrary-backend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/controller/JogoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/controller/JogoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gamelibrary-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-backend/src/main/resources/application.properties" afterDir="false" />
+    <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="Added Dockerfile for Deploy">
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +85,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jvmfo\IdeaProjects\gamelibrary" />
       <recent name="C:\Users\jvmfo\IdeaProjects\gamelibrary\gamelibrary-frontend\src\components\icons" />
       <recent name="C:\Users\jvmfo\IdeaProjects\gamelibrary\gamelibrary-frontend\src\components" />
     </key>
@@ -132,7 +130,8 @@
     <MESSAGE value="Added new looks, and Steam sync support" />
     <MESSAGE value="Code cleaning and reestructuration, some improovements to the look" />
     <MESSAGE value="Updated README" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated README" />
+    <MESSAGE value="Added Dockerfile for Deploy" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Dockerfile for Deploy" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
