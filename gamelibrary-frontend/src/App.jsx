@@ -22,7 +22,7 @@ const jogoVazio = {
 };
 
 export default function App() {
-  const { jogos, erro, setErro, salvarJogo, excluirJogo, sincronizarSteam } = useJogos();
+  const { jogos, erro, setErro, salvarJogo, excluirJogo, sincronizarSteam } = useJogos(session?.user?.id);
 
   // Estados de Autenticação Supabase
   const [session, setSession] = useState(null);

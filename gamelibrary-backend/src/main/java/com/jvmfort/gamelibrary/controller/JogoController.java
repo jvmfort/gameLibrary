@@ -71,10 +71,10 @@ public class JogoController {
 
     @GetMapping
     public List<Jogo> listar(@RequestHeader(value = "X-User-Id", required = false) String userId) {
-        if (userId != null && !userId.isBlank()) {
-            return jogoRepository.findByUserId(userId);
+        if (userId == null || userId.isBlank()) {
+            return List.of(); // Retorna lista vazia caso não haja usuário logado
         }
-        return jogoRepository.findAll();
+        return jogoRepository.findByUserId(userId);
     }
 
     @PostMapping
@@ -84,4 +84,5 @@ public class JogoController {
         }
         return jogoRepository.save(jogo);
     }
+
 }
