@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useJogos } from "./hooks/useJogos";
+import { supabase } from "./services/supabase";
+import { AuthModal } from "./components/AuthModal";
 import Header from "./components/Header";
 import GameGrid from "./components/GameGrid";
 import GameFormModal from "./components/GameFormModal";
@@ -22,6 +24,12 @@ const jogoVazio = {
 export default function App() {
   const { jogos, erro, setErro, salvarJogo, excluirJogo, sincronizarSteam } = useJogos();
 
+  // Estados de Autenticação Supabase
+  const [session, setSession] = useState(null);
+  const [carregandoAuth, setCarregandoAuth] = useState(true);
+  const [modalAuth, setModalAuth] = useState(false);
+
+  // Estados dos Jogos
   const [modal, setModal] = useState(false);
   const [form, setForm] = useState(jogoVazio);
   const [editandoId, setEditandoId] = useState(null);
@@ -32,6 +40,25 @@ export default function App() {
   const [steamLoading, setSteamLoading] = useState(false);
   const [steamErro, setSteamErro] = useState(null);
   const [jogoParaExcluir, setJogoParaExcluir] = useState(null);
+
+  // Escuta o status do login no Supabase
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setCarregandoAuth(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setCarregandoAuth(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+  }
 
   function abrirNovo() {
     setForm(jogoVazio);
@@ -93,8 +120,58 @@ export default function App() {
     }
   }
 
+  // 1. Loading inicial enquanto checa se há sessão ativa salva
+  if (carregandoAuth) {
+    return (
+        <div className="min-h-screen bg-[#080808] flex items-center justify-center text-amber-500 text-xs tracking-widest font-mono">
+          CARREGANDO...
+        </div>
+    );
+  }
+
+  // 2. Tela de bloqueio caso não esteja logado
+  if (!session) {
+    return (
+        <div className="min-h-screen bg-[#080808] text-neutral-200 flex flex-col items-center justify-center p-4 font-sans">
+          <div className="max-w-md w-full text-center space-y-6">
+            <div>
+              <h1 className="text-2xl font-black tracking-widest text-amber-500 uppercase">
+                Game Library
+              </h1>
+              <p className="text-xs text-neutral-500 mt-2">
+                Sua coleção pessoal de jogos, sincronizada na nuvem.
+              </p>
+            </div>
+
+            <button
+                onClick={() => setModalAuth(true)}
+                className="w-full bg-amber-500 hover:bg-amber-400 text-neutral-950 font-bold py-3 rounded-lg text-xs tracking-wide uppercase transition-all cursor-pointer shadow-lg shadow-amber-500/10"
+            >
+              Acessar com minha conta
+            </button>
+          </div>
+
+          <AuthModal isOpen={modalAuth} onClose={() => setModalAuth(false)} />
+        </div>
+    );
+  }
+
+  // 3. Aplicação Liberada (Usuário Logado)
   return (
       <div className="min-h-screen bg-[#080808] text-neutral-200 flex flex-col font-sans">
+        {/* Barra de usuário no topo */}
+        <div className="bg-[#0e0e0e] border-b border-neutral-900 px-6 py-2 flex items-center justify-between text-[11px] text-neutral-400">
+          <div>
+            Conectado como: <span className="text-amber-500 font-medium">{session.user.email}</span>
+          </div>
+          <button
+              onClick={handleLogout}
+              className="text-neutral-400 hover:text-red-400 transition-colors cursor-pointer"
+          >
+            Sair da conta
+          </button>
+        </div>
+
         <Header
             totalJogos={jogos.length}
             onAbrirNovo={abrirNovo}
@@ -187,6 +264,9 @@ export default function App() {
               </div>
             </div>
         )}
+
+        {/* Modal de Autenticação */}
+        <AuthModal isOpen={modalAuth} onClose={() => setModalAuth(false)} />
       </div>
   );
 }
