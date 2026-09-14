@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const API = "http://localhost:8080/jogos";
+const API = import.meta.env.VITE_API_URL || "http://localhost:8080/jogos";
 
 export function useJogos() {
     const [jogos, setJogos] = useState([]);
