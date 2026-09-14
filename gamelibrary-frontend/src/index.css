@@ -1,164 +1,49 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import "tailwindcss";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
-
-/* Animação do efeito Pérola Reluzente (Platinado) */
+/* Suas animações personalizadas continuam aqui embaixo */
 @keyframes pearlGlow {
   0%, 100% {
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(216, 180, 254, 0.4);
-    filter: brightness(1);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5), 0 0 14px rgba(216, 180, 254, 0.35);
   }
   50% {
-    box-shadow: 0 0 12px rgba(244, 114, 182, 0.7), 0 0 22px rgba(192, 132, 252, 0.5);
-    filter: brightness(1.2);
+    box-shadow: 0 0 10px rgba(244, 114, 182, 0.65), 0 0 20px rgba(192, 132, 252, 0.45);
   }
 }
 
 @keyframes pearlDotPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.85;
-  }
-  50% {
-    transform: scale(1.3);
-    opacity: 1;
-  }
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.25); opacity: 1; }
 }
 
 .badge-platinado {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(216, 180, 254, 0.22), rgba(186, 230, 253, 0.2)) !important;
-  border: 1px solid rgba(255, 255, 255, 0.55) !important;
-  animation: pearlGlow 3s infinite ease-in-out;
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(216, 180, 254, 0.22), rgba(186, 230, 253, 0.18)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  animation: pearlGlow 3.5s infinite ease-in-out;
+  color: #f8fafc !important;
 }
 
 .dot-platinado {
   background: radial-gradient(circle, #ffffff 30%, #c084fc 70%, #38bdf8 100%) !important;
   animation: pearlDotPulse 2s infinite ease-in-out;
-  box-shadow: 0 0 10px #ffffff !important;
+  box-shadow: 0 0 8px #ffffff !important;
 }
 
-/* Transição suave de elevação no card */
 .game-card {
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
-  box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1),
-  border-color 0.22s ease;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+  border-color 0.2s ease,
+  box-shadow 0.2s ease;
 }
 
 .game-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(245, 158, 11, 0.4) !important;
-  box-shadow: 0 14px 28px -8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(245, 158, 11, 0.12) !important;
+  transform: translateY(-4px);
+  border-color: #383838 !important;
+  box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(245, 158, 11, 0.25) !important;
 }
 
-.game-card:hover .card-cover {
-  transform: scale(1.04);
+.game-card:hover .card-poster-img {
+  transform: scale(1.05);
+}
+
+.card-poster-img {
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
 }
