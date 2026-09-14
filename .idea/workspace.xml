@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="Going Vercel" />
+    <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="Going Vercel">
+      <change afterPath="$PROJECT_DIR$/gamelibrary-frontend/src/components/AuthModal.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gamelibrary-frontend/src/services/supabase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/controller/JogoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/controller/JogoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/model/Jogo.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/model/Jogo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/repository/JogoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/repository/JogoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibrary-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibrary-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-frontend/package.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,8 +26,8 @@
         <option value="Interface" />
         <option value="SimpleSourceFile" />
         <option value="Class" />
-        <option value="JSX File" />
         <option value="JavaScript File" />
+        <option value="JSX File" />
       </list>
     </option>
   </component>

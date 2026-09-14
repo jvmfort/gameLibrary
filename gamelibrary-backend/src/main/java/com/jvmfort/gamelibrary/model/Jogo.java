@@ -8,6 +8,18 @@ import java.util.Objects;
 @Table(name = "jogos")
 public class Jogo {
 
+    @Column(name = "user_id")
+    private String userId; // Armazena o UUID do usuário gerado pelo Supabase
+
+    // Getter e Setter (ou @Data do Lombok)
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import com.jvmfort.gamelibrary.repository.JogoRepository; // 1. Certifique-se de importar o repositório
 
 
 @CrossOrigin(
@@ -28,9 +28,11 @@ public class JogoController {
     @Autowired
     private JogoService service;
     private final SteamService steamService;
+    private final JogoRepository jogoRepository;
 
-    public JogoController(SteamService steamService) {
+    public JogoController(SteamService steamService, JogoRepository jogoRepository) {
         this.steamService = steamService;
+        this.jogoRepository = jogoRepository;
     }
 
     @PostMapping("/importar-steam/{steamId}")
@@ -65,5 +67,21 @@ public class JogoController {
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         service.excluir(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public List<Jogo> listar(@RequestHeader(value = "X-User-Id", required = false) String userId) {
+        if (userId != null && !userId.isBlank()) {
+            return jogoRepository.findByUserId(userId);
+        }
+        return jogoRepository.findAll();
+    }
+
+    @PostMapping
+    public Jogo salvar(@RequestBody Jogo jogo, @RequestHeader(value = "X-User-Id", required = false) String userId) {
+        if (userId != null) {
+            jogo.setUserId(userId);
+        }
+        return jogoRepository.save(jogo);
     }
 }
