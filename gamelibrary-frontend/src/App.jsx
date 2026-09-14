@@ -22,14 +22,15 @@ const jogoVazio = {
 };
 
 export default function App() {
-  const { jogos, erro, setErro, salvarJogo, excluirJogo, sincronizarSteam } = useJogos(session?.user?.id);
-
-  // Estados de Autenticação Supabase
+  // 1. Estados de Autenticação Supabase (DECLARADOS PRIMEIRO)
   const [session, setSession] = useState(null);
   const [carregandoAuth, setCarregandoAuth] = useState(true);
   const [modalAuth, setModalAuth] = useState(false);
 
-  // Estados dos Jogos
+  // 2. Hook de Jogos (AGORA SESSION JÁ EXISTE QUANDO ELE É CHAMADO)
+  const { jogos, erro, setErro, salvarJogo, excluirJogo, sincronizarSteam } = useJogos(session?.user?.id);
+
+  // 3. Estados dos Jogos e Modais
   const [modal, setModal] = useState(false);
   const [form, setForm] = useState(jogoVazio);
   const [editandoId, setEditandoId] = useState(null);
