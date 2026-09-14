@@ -1,74 +1,23 @@
 package com.jvmfort.gamelibrary.controller;
 
 import com.jvmfort.gamelibrary.model.Jogo;
-import com.jvmfort.gamelibrary.service.JogoService;
-import com.jvmfort.gamelibrary.service.SteamService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.jvmfort.gamelibrary.repository.JogoRepository;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import com.jvmfort.gamelibrary.repository.JogoRepository; // 1. Certifique-se de importar o repositório
 
-
-@CrossOrigin(
-        origins = {
-                "http://localhost:5173",
-                "https://game-library-teal.vercel.app/" // se suportado, ou coloque a URL exata abaixo
-        },
-        allowedHeaders = "*",
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS}
-)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/jogos")
-
 public class JogoController {
 
-    @Autowired
-    private JogoService service;
-    private final SteamService steamService;
     private final JogoRepository jogoRepository;
 
-    public JogoController(SteamService steamService, JogoRepository jogoRepository) {
-        this.steamService = steamService;
+    public JogoController(JogoRepository jogoRepository) {
         this.jogoRepository = jogoRepository;
     }
 
-    @PostMapping("/importar-steam/{steamId}")
-    public ResponseEntity<List<Jogo>> importarSteam(@PathVariable String steamId) {
-        // Chamada usando a instância injetada (minúscula)
-        List<Jogo> jogosImportados = steamService.importarJogosSteam(steamId);
-        return ResponseEntity.ok(jogosImportados);
-    }
-
-    @GetMapping
-    public List<Jogo> listar() {
-        return service.listarTodos();
-    }
-
-    @GetMapping("/{id}")
-    public Jogo buscar(@PathVariable Long id) {
-        return service.buscarPorId(id);
-    }
-
-    @PostMapping
-    public ResponseEntity<Jogo> criar(@Valid @RequestBody Jogo jogo) {
-        Jogo criado = service.criar(jogo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
-    }
-
-    @PutMapping("/{id}")
-    public Jogo editar(@PathVariable Long id, @Valid @RequestBody Jogo dados) {
-        return service.editar(id, dados);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        service.excluir(id);
-        return ResponseEntity.noContent().build();
-    }
-
+    // ÚNICO MÉTODO GET - apague qualquer outro listar() que estiver no arquivo
     @GetMapping
     public List<Jogo> listar(
             @RequestHeader(value = "X-User-Id", required = false) String headerUserId,
@@ -76,7 +25,6 @@ public class JogoController {
     ) {
         String userId = (paramUserId != null && !paramUserId.isBlank()) ? paramUserId : headerUserId;
 
-        // SE NÃO HOUVER USUÁRIO, NÃO RETORNE NADA! NUNCA FAÇA findAll() AQUI
         if (userId == null || userId.isBlank()) {
             return List.of();
         }
@@ -89,7 +37,6 @@ public class JogoController {
             @RequestBody Jogo jogo,
             @RequestHeader(value = "X-User-Id", required = false) String headerUserId
     ) {
-        // Se o frontend mandou no corpo, mantém; se veio no header, usa ele
         if (jogo.getUserId() == null || jogo.getUserId().isBlank()) {
             jogo.setUserId(headerUserId);
         }
@@ -97,4 +44,21 @@ public class JogoController {
         return jogoRepository.save(jogo);
     }
 
+    @PutMapping("/{id}")
+    public Jogo atualizar(
+            @PathVariable Long id,
+            @RequestBody Jogo jogo,
+            @RequestHeader(value = "X-User-Id", required = false) String headerUserId
+    ) {
+        jogo.setId(id);
+        if (jogo.getUserId() == null || jogo.getUserId().isBlank()) {
+            jogo.setUserId(headerUserId);
+        }
+        return jogoRepository.save(jogo);
+    }
+
+    @DeleteMapping("/{id}")
+    public void excluir(@PathVariable Long id) {
+        jogoRepository.deleteById(id);
+    }
 }
