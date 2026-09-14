@@ -70,18 +70,30 @@ public class JogoController {
     }
 
     @GetMapping
-    public List<Jogo> listar(@RequestHeader(value = "X-User-Id", required = false) String userId) {
+    public List<Jogo> listar(
+            @RequestHeader(value = "X-User-Id", required = false) String headerUserId,
+            @RequestParam(value = "userId", required = false) String paramUserId
+    ) {
+        String userId = (paramUserId != null && !paramUserId.isBlank()) ? paramUserId : headerUserId;
+
+        // SE NÃO HOUVER USUÁRIO, NÃO RETORNE NADA! NUNCA FAÇA findAll() AQUI
         if (userId == null || userId.isBlank()) {
-            return List.of(); // Retorna lista vazia caso não haja usuário logado
+            return List.of();
         }
+
         return jogoRepository.findByUserId(userId);
     }
 
     @PostMapping
-    public Jogo salvar(@RequestBody Jogo jogo, @RequestHeader(value = "X-User-Id", required = false) String userId) {
-        if (userId != null) {
-            jogo.setUserId(userId);
+    public Jogo salvar(
+            @RequestBody Jogo jogo,
+            @RequestHeader(value = "X-User-Id", required = false) String headerUserId
+    ) {
+        // Se o frontend mandou no corpo, mantém; se veio no header, usa ele
+        if (jogo.getUserId() == null || jogo.getUserId().isBlank()) {
+            jogo.setUserId(headerUserId);
         }
+
         return jogoRepository.save(jogo);
     }
 

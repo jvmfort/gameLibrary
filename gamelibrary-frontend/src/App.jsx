@@ -270,4 +270,6 @@ export default function App() {
         <AuthModal isOpen={modalAuth} onClose={() => setModalAuth(false)} />
       </div>
   );
+
+
 }

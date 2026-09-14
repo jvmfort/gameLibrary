@@ -7,18 +7,22 @@ export function useJogos(userId) {
     const API = import.meta.env.VITE_API_URL || "http://localhost:8080/jogos";
 
     const carregarJogos = useCallback(async () => {
+        // Se não tem usuário logado, zera a lista na hora
         if (!userId) {
             setJogos([]);
             return;
         }
+
         try {
-            const res = await fetch(API, {
+            // Passa o userId tanto na query string (?userId=...) quanto no header
+            const res = await fetch(`${API}?userId=${userId}`, {
                 headers: {
                     "Content-Type": "application/json",
                     "X-User-Id": userId,
                 },
             });
-            if (!res.ok) throw new Error("Erro ao buscar jogos");
+
+            if (!res.ok) throw new Error("Erro ao carregar jogos");
             const dados = await res.json();
             setJogos(dados);
         } catch (err) {
@@ -35,13 +39,19 @@ export function useJogos(userId) {
             const url = editandoId ? `${API}/${editandoId}` : API;
             const method = editandoId ? "PUT" : "POST";
 
+            // Injeta o userId diretamente dentro do objeto antes de enviar
+            const jogoComUsuario = {
+                ...jogo,
+                userId: userId,
+            };
+
             const res = await fetch(url, {
                 method,
                 headers: {
                     "Content-Type": "application/json",
                     "X-User-Id": userId,
                 },
-                body: JSON.stringify(jogo),
+                body: JSON.stringify(jogoComUsuario),
             });
 
             if (!res.ok) throw new Error("Erro ao salvar jogo");
@@ -61,6 +71,7 @@ export function useJogos(userId) {
                     "X-User-Id": userId,
                 },
             });
+
             if (!res.ok) throw new Error("Erro ao excluir jogo");
             await carregarJogos();
             return true;
@@ -71,7 +82,7 @@ export function useJogos(userId) {
     }
 
     async function sincronizarSteam(steamId) {
-        // se tiver endpoint de steam, envie o header 'X-User-Id' também
+        // Implementação da steam se houver
     }
 
     return { jogos, erro, setErro, salvarJogo, excluirJogo, sincronizarSteam, recarregar: carregarJogos };
