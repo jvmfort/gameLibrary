@@ -82,7 +82,24 @@ export function useJogos(userId) {
     }
 
     async function sincronizarSteam(steamId) {
-        // Implementação da steam se houver
+        // Ajuste a URL se a rota da Steam no Spring Boot for /jogos/steam ou /steam
+        const url = `${API}/steam?steamId=${steamId}&userId=${userId}`;
+
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-User-Id": userId || "",
+            },
+        });
+
+        if (!res.ok) {
+            const msg = await res.text();
+            throw new Error(msg || "Erro ao sincronizar com a Steam");
+        }
+
+        await carregarJogos();
+        return true;
     }
 
     return { jogos, erro, setErro, salvarJogo, excluirJogo, sincronizarSteam, recarregar: carregarJogos };
