@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="Added Dockerfile for Deploy" />
+    <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="Going Vercel" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,7 +129,8 @@
     <MESSAGE value="Code cleaning and reestructuration, some improovements to the look" />
     <MESSAGE value="Updated README" />
     <MESSAGE value="Added Dockerfile for Deploy" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Dockerfile for Deploy" />
+    <MESSAGE value="Going Vercel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Going Vercel" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
