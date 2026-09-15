@@ -4,18 +4,15 @@ export function useJogos(userId) {
     const [jogos, setJogos] = useState([]);
     const [erro, setErro] = useState(null);
 
-    const API = import.meta.env.VITE_API_URL || "http://localhost:8080/jogos";
-
+    const API = import.meta.env.VITE_API_URL || "https://gamelibrary-wwak.onrender.com/jogos";
 
     const carregarJogos = useCallback(async () => {
-        // Se não tem usuário logado, zera a lista na hora
         if (!userId) {
             setJogos([]);
             return;
         }
 
         try {
-            // Passa o userId tanto na query string (?userId=...) quanto no header
             const res = await fetch(`${API}?userId=${userId}`, {
                 headers: {
                     "Content-Type": "application/json",
@@ -40,19 +37,21 @@ export function useJogos(userId) {
             const url = editandoId ? `${API}/${editandoId}` : API;
             const method = editandoId ? "PUT" : "POST";
 
-            // Injeta o userId diretamente dentro do objeto antes de enviar
-            const jogoComUsuario = {
+            const payload = {
                 ...jogo,
                 userId: userId,
+                horasJogadas: jogo.horasJogadas ? parseFloat(jogo.horasJogadas) : 0,
+                notaPessoal: jogo.notaPessoal ? parseInt(jogo.notaPessoal, 10) : null,
+                anoLancamento: jogo.anoLancamento ? parseInt(jogo.anoLancamento, 10) : null,
             };
 
             const res = await fetch(url, {
                 method,
                 headers: {
                     "Content-Type": "application/json",
-                    "X-User-Id": userId,
+                    "X-User-Id": userId || "",
                 },
-                body: JSON.stringify(jogoComUsuario),
+                body: JSON.stringify(payload),
             });
 
             if (!res.ok) throw new Error("Erro ao salvar jogo");
@@ -69,7 +68,7 @@ export function useJogos(userId) {
             const res = await fetch(`${API}/${id}`, {
                 method: "DELETE",
                 headers: {
-                    "X-User-Id": userId,
+                    "X-User-Id": userId || "",
                 },
             });
 
@@ -83,34 +82,37 @@ export function useJogos(userId) {
     }
 
     async function sincronizarSteam(steamId) {
-        const url = `${API}/steam?steamId=${steamId}&userId=${userId}`;
+        try {
+            const url = `${API}/steam?steamId=${steamId}&userId=${userId}`;
 
-        const res = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-User-Id": userId || "",
-            },
-        });
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-User-Id": userId || "",
+                },
+            });
 
-        if (!res.ok) {
-            const msg = await res.text();
-            throw new Error(msg || "Erro ao sincronizar com a Steam");
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || "Erro ao sincronizar com a Steam");
+            }
+
+            await carregarJogos();
+            return true;
+        } catch (err) {
+            setErro(err.message);
+            throw err;
         }
-
-        // Recarrega os jogos imediatamente com o userId atual
-        await carregarJogos();
-        return true;
     }
 
-        if (!res.ok) {
-            const msg = await res.text();
-            throw new Error(msg || "Erro ao sincronizar com a Steam");
-        }
-
-        await carregarJogos();
-        return true;
-    }
-
-    return { jogos, erro, setErro, salvarJogo, excluirJogo, sincronizarSteam, recarregar: carregarJogos };
+    return {
+        jogos,
+        erro,
+        setErro,
+        salvarJogo,
+        excluirJogo,
+        sincronizarSteam,
+        recarregar: carregarJogos,
+    };
 }
