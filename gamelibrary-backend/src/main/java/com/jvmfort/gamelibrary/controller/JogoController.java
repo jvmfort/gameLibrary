@@ -2,6 +2,8 @@ package com.jvmfort.gamelibrary.controller;
 
 import com.jvmfort.gamelibrary.model.Jogo;
 import com.jvmfort.gamelibrary.repository.JogoRepository;
+import com.jvmfort.gamelibrary.service.SteamService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,24 +14,29 @@ import java.util.List;
 public class JogoController {
 
     private final JogoRepository jogoRepository;
+    private final SteamService steamService;
 
-    public JogoController(JogoRepository jogoRepository) {
+    public JogoController(JogoRepository jogoRepository, SteamService steamService) {
         this.jogoRepository = jogoRepository;
+        this.steamService = steamService;
     }
 
-    // ÚNICO MÉTODO GET - apague qualquer outro listar() que estiver no arquivo
-    @GetMapping
-    public List<Jogo> listar(
-            @RequestHeader(value = "X-User-Id", required = false) String headerUserId,
-            @RequestParam(value = "userId", required = false) String paramUserId
+    // Endpoint esperado pelo frontend
+    @PostMapping("/steam")
+    public ResponseEntity<?> sincronizarSteam(
+            @RequestParam String steamId,
+            @RequestParam(required = false) String userId,
+            @RequestHeader(value = "X-User-Id", required = false) String headerUserId
     ) {
-        String userId = (paramUserId != null && !paramUserId.isBlank()) ? paramUserId : headerUserId;
+        String finalUserId = (userId != null && !userId.isBlank()) ? userId : headerUserId;
 
-        if (userId == null || userId.isBlank()) {
-            return List.of();
+        if (finalUserId == null || finalUserId.isBlank()) {
+            return ResponseEntity.badRequest().body("Usuário não identificado.");
         }
 
-        return jogoRepository.findByUserId(userId);
+        List<Jogo> importados = steamService.sincronizarJogos(steamId, finalUserId);
+        return ResponseEntity.ok(importados);
+
     }
 
     @PostMapping
