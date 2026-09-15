@@ -21,7 +21,32 @@ public class JogoController {
         this.steamService = steamService;
     }
 
-    // Endpoint esperado pelo frontend
+    // ESSE É O MÉTODO QUE ESTÁ FALTANDO OU COM MÉTODO HTTP ERRADO:
+    @GetMapping
+    public List<Jogo> listar(
+            @RequestParam(value = "userId", required = false) String paramUserId,
+            @RequestHeader(value = "X-User-Id", required = false) String headerUserId
+    ) {
+        String userId = (paramUserId != null && !paramUserId.isBlank()) ? paramUserId : headerUserId;
+
+        if (userId == null || userId.isBlank()) {
+            return List.of();
+        }
+
+        return jogoRepository.findByUserId(userId);
+    }
+
+    @PostMapping
+    public Jogo salvar(
+            @RequestBody Jogo jogo,
+            @RequestHeader(value = "X-User-Id", required = false) String headerUserId
+    ) {
+        if (jogo.getUserId() == null || jogo.getUserId().isBlank()) {
+            jogo.setUserId(headerUserId);
+        }
+        return jogoRepository.save(jogo);
+    }
+
     @PostMapping("/steam")
     public ResponseEntity<?> sincronizarSteam(
             @RequestParam String steamId,
@@ -36,19 +61,6 @@ public class JogoController {
 
         List<Jogo> importados = steamService.sincronizarJogos(steamId, finalUserId);
         return ResponseEntity.ok(importados);
-
-    }
-
-    @PostMapping
-    public Jogo salvar(
-            @RequestBody Jogo jogo,
-            @RequestHeader(value = "X-User-Id", required = false) String headerUserId
-    ) {
-        if (jogo.getUserId() == null || jogo.getUserId().isBlank()) {
-            jogo.setUserId(headerUserId);
-        }
-
-        return jogoRepository.save(jogo);
     }
 
     @PutMapping("/{id}")

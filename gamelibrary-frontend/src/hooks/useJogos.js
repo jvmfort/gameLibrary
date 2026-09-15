@@ -28,9 +28,12 @@ export function useJogos(userId) {
         }
     }, [API, userId]);
 
+    // Recarrega sempre que o userId mudar de null para o UUID
     useEffect(() => {
         carregarJogos();
     }, [carregarJogos]);
+
+    // ... mantenha o restante das funções (salvarJogo, excluirJogo, sincronizarSteam)
 
     async function salvarJogo(jogo, editandoId) {
         try {

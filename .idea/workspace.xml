@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="Teste no front">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gamelibrary-frontend/src/components/GameCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-frontend/src/components/GameCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/controller/JogoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-backend/src/main/java/com/jvmfort/gamelibrary/controller/JogoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gamelibrary-frontend/src/hooks/useJogos.js" beforeDir="false" afterPath="$PROJECT_DIR$/gamelibrary-frontend/src/hooks/useJogos.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,6 +67,7 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Node.js.App.jsx.executor": "Run",
+    "Node.js.supabase.js.executor": "Run",
     "Node.js.useJogos.js.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
