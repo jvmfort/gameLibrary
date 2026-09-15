@@ -2,49 +2,44 @@ import { STATUS_CONFIG } from "../config/statusConfig";
 import { DiscIcon, EditIcon, TrashIcon } from "./icons/Icons";
 
 export default function GameCard({ jogo, onEditar, onExcluir }) {
-    const status = STATUS_CONFIG[jogo.status] || STATUS_CONFIG.NAO_INICIADO;
+    // Fallback seguro caso o status venha nulo ou com nome não mapeado
+    const statusPadrao = {
+        label: "Não Iniciado",
+        badgeClass: "border-neutral-700 text-neutral-400 bg-neutral-900/80",
+        dotClass: "bg-neutral-500",
+    };
+
+    const status = (STATUS_CONFIG && STATUS_CONFIG[jogo.status])
+        || (STATUS_CONFIG && STATUS_CONFIG.NAO_INICIADO)
+        || statusPadrao;
 
     return (
-        <div className="game-card bg-[#111111] rounded-lg overflow-hidden flex flex-col border border-[#1c1c1c]">
+        <div className="game-card bg-[#111111] rounded-lg overflow-hidden flex flex-col border border-[#1c1c1c] hover:border-neutral-700 transition-colors">
             {/* Capa Pôster 3:4 */}
             <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#0a0a0a]">
                 {jogo.capaUrl ? (
                     <img
                         src={jogo.capaUrl}
                         alt={jogo.nome}
-                        className="card-poster-img w-full h-full object-cover"
+                        onError={(e) => {
+                            e.currentTarget.src = "https://placehold.co/600x800/111111/444444?text=Sem+Capa";
+                        }}
+                        className="w-full h-full object-cover"
                     />
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center text-neutral-600">
                         <DiscIcon />
                     </div>
                 )}
-
-                {/* Exemplo de exibição segura de Ano de Lançamento */}
-                <span className="text-xs text-neutral-500">
-  {jogo.anoLancamento ? jogo.anoLancamento : "Ano N/D"}
-</span>
-
-                {/* Exemplo de exibição segura de Gênero */}
-                <span className="text-xs text-neutral-400">
-  {jogo.genero || "Gênero não informado"}
-</span>
-
-                {/* Exemplo de imagem segura */}
-                <img
-                    src={jogo.capaUrl || "https://placehold.co/600x400/1a1a1a/ffffff?text=Sem+Capa"}
-                    alt={jogo.nome}
-                    className="w-full h-48 object-cover rounded-md"
-                />
 
                 {/* Gradiente sutil */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/20 to-transparent" />
 
                 {/* Badge de Status */}
-                <div className={`absolute top-2 right-2 flex items-center gap-1.5 px-2 py-0.5 rounded border backdrop-blur-md ${status.badgeClass}`}>
-                    <span className={`w-1.5 h-1.5 rounded-full inline-block ${status.dotClass}`} />
+                <div className={`absolute top-2 right-2 flex items-center gap-1.5 px-2 py-0.5 rounded border backdrop-blur-md ${status.badgeClass || ""}`}>
+                    <span className={`w-1.5 h-1.5 rounded-full inline-block ${status.dotClass || "bg-neutral-400"}`} />
                     <span className="text-[10px] font-semibold tracking-wide">
-            {status.label}
+            {status.label || "Não Iniciado"}
           </span>
                 </div>
 
@@ -59,20 +54,21 @@ export default function GameCard({ jogo, onEditar, onExcluir }) {
                 )}
             </div>
 
-            {/* Info */}
-            <div className="p-3 flex flex-col flex-1 justify-between gap-1">
+            {/* Informações do Jogo */}
+            <div className="p-3 flex flex-col flex-1 justify-between gap-2">
                 <div>
                     <h3 className="m-0 text-[13px] font-semibold text-neutral-100 truncate" title={jogo.nome}>
                         {jogo.nome}
                     </h3>
-                    <p className="mt-0.5 text-[11px] text-neutral-500 truncate">
-                        {jogo.plataforma || "Sem plataforma"}
-                    </p>
+                    <div className="flex items-center justify-between mt-0.5 text-[11px] text-neutral-500">
+                        <span className="truncate max-w-[110px]">{jogo.plataforma || "PC"}</span>
+                        <span>{jogo.anoLancamento ? jogo.anoLancamento : "—"}</span>
+                    </div>
                 </div>
 
                 <div className="pt-2 border-t border-[#1a1a1a] flex justify-between items-center">
-          <span className="text-[11px] text-neutral-400">
-            {jogo.horasJogadas || 0}h
+          <span className="text-[11px] text-neutral-400 font-mono">
+            {jogo.horasJogadas ? `${jogo.horasJogadas}h` : "0h"}
           </span>
 
                     <div className="flex gap-1">

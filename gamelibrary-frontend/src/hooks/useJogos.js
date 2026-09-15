@@ -6,6 +6,7 @@ export function useJogos(userId) {
 
     const API = import.meta.env.VITE_API_URL || "http://localhost:8080/jogos";
 
+
     const carregarJogos = useCallback(async () => {
         // Se não tem usuário logado, zera a lista na hora
         if (!userId) {
@@ -82,7 +83,6 @@ export function useJogos(userId) {
     }
 
     async function sincronizarSteam(steamId) {
-        // Ajuste a URL se a rota da Steam no Spring Boot for /jogos/steam ou /steam
         const url = `${API}/steam?steamId=${steamId}&userId=${userId}`;
 
         const res = await fetch(url, {
@@ -92,6 +92,16 @@ export function useJogos(userId) {
                 "X-User-Id": userId || "",
             },
         });
+
+        if (!res.ok) {
+            const msg = await res.text();
+            throw new Error(msg || "Erro ao sincronizar com a Steam");
+        }
+
+        // Recarrega os jogos imediatamente com o userId atual
+        await carregarJogos();
+        return true;
+    }
 
         if (!res.ok) {
             const msg = await res.text();
