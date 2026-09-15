@@ -20,6 +20,23 @@ export default function GameCard({ jogo, onEditar, onExcluir }) {
                     </div>
                 )}
 
+                {/* Exemplo de exibição segura de Ano de Lançamento */}
+                <span className="text-xs text-neutral-500">
+  {jogo.anoLancamento ? jogo.anoLancamento : "Ano N/D"}
+</span>
+
+                {/* Exemplo de exibição segura de Gênero */}
+                <span className="text-xs text-neutral-400">
+  {jogo.genero || "Gênero não informado"}
+</span>
+
+                {/* Exemplo de imagem segura */}
+                <img
+                    src={jogo.capaUrl || "https://placehold.co/600x400/1a1a1a/ffffff?text=Sem+Capa"}
+                    alt={jogo.nome}
+                    className="w-full h-48 object-cover rounded-md"
+                />
+
                 {/* Gradiente sutil */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/20 to-transparent" />
 

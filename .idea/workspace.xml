@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="Authentication added, security reinforced" />
+    <list default="true" id="f2e8774f-62d5-4c32-9d3e-34d819270d57" name="Changes" comment="remoção CORS" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -122,7 +122,8 @@
     <MESSAGE value="Going Vercel" />
     <MESSAGE value="Authentication added" />
     <MESSAGE value="Authentication added, security reinforced" />
-    <option name="LAST_COMMIT_MESSAGE" value="Authentication added, security reinforced" />
+    <MESSAGE value="remoção CORS" />
+    <option name="LAST_COMMIT_MESSAGE" value="remoção CORS" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
