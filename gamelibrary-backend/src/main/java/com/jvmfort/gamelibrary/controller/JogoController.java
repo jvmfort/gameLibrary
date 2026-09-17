@@ -21,7 +21,6 @@ public class JogoController {
         this.steamService = steamService;
     }
 
-    // ESSE É O MÉTODO QUE ESTÁ FALTANDO OU COM MÉTODO HTTP ERRADO:
     @GetMapping
     public List<Jogo> listar(
             @RequestParam(value = "userId", required = false) String paramUserId,
