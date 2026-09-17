@@ -9,9 +9,9 @@ import java.util.Objects;
 public class Jogo {
 
     @Column(name = "user_id")
-    private String userId; // Armazena o UUID do usuário gerado pelo Supabase
+    private String userId;
 
-    // Getter e Setter (ou @Data do Lombok)
+    
     public String getUserId() {
         return userId;
     }
@@ -28,11 +28,9 @@ public class Jogo {
     @Column(nullable = false, length = 150)
     private String nome;
 
-    // Aumentado para 255 para suportar listas vindas da RAWG (ex: "PC, PS5, Xbox Series")
     @Column(length = 255)
     private String plataforma;
 
-    // Aumentado para 255 para comportar múltiplos gêneros (ex: "Action, Adventure, RPG")
     @Column(length = 255)
     private String genero;
 
@@ -58,9 +56,7 @@ public class Jogo {
     @Column(columnDefinition = "TEXT")
     private String review;
 
-    // --- Novos campos para integração com RAWG ---
 
-    // URLs da CDN do RAWG passam facilmente de 100 caracteres; 500 garante segurança
     @Column(name = "capa_url", length = 500)
     private String capaUrl;
 
